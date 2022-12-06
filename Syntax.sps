@@ -1,0 +1,31 @@
+﻿* Encoding: UTF-8.
+CD '/Users/julia/Desktop/3 семестр/SPSS/Базы данных/KCYPS2018 e4[SPSS]'.
+GET FILE='KCYPS2018e4Yw1.sav'.
+DATASET NAME child WINDOW=FRONT. 
+
+GRAPH
+/SCATTERPLOT YPHY2A00w1 with YPHY2B00w1. 
+
+CORRELATIONS
+/VARIABLES=YPHY2A00w1 YPHY2B00w1
+/PRINT=TWOTAIL NOSIG. 
+
+compute lifesat=mean( YPSY1A01w1 to YPSY1A05w1).
+VARIABLE LABELS lifesat '삶의 만족도'.
+
+compute positive=mean( YFAM2A01w1 to  YFAM2A04w1,  YFAM2C01w1 to  YFAM2C04w1,  YFAM2E01w1 to  YFAM2E04w1).
+VARIABLE LABELS positive '긍정적 양육태도'.
+RELIABILITY
+/VARIABLES=YFAM2A01w1 to YFAM2A04w1 YFAM2C01w1 to  YFAM2C04w1  YFAM2E01w1 to  YFAM2E04w1
+/SCALE(positive)=All. 
+
+GRAPH
+/SCATTERPLOT positive with lifesat. 
+
+CORRELATIONS
+/VARIABLES=positive lifesat
+/PRINT=NOSIG.
+REGRESSION
+/DEPENDENT lifesat 
+/METHOD enter positive. 
+
